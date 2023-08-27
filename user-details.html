@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .user-details {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .user-details p {
+            margin: 0 0 10px 0;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .view-products-button,
+        .logout-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="user-details">
+        <div class="button-container">
+            <button class="logout-button" id="logout">Logout</button>
+        </div>
+        <h2>User Details</h2>
+        <div>
+            <p><strong>Name:</strong> <span id="name"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Product Count:</strong> <span id="productCount"></span></p>
+        </div>
+        <div class="button-container">
+            <button class="view-products-button" id="view-products">View Products</button>
+        </div>
+    </div>
+
+    <script>
+        var params = new URLSearchParams(window.location.search);
+        var name = params.get("name");
+        var email = params.get("email");
+
+        document.getElementById("name").textContent = name;
+        document.getElementById("email").textContent = email;
+
+        var products = JSON.parse(localStorage.getItem("products")) || [];
+        document.getElementById("productCount").textContent = products.length;
+
+        document.getElementById("view-products").addEventListener("click", function () {
+            window.location.href = "view-products.html";
+        });
+
+        document.getElementById("logout").addEventListener("click", function () {
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+
+</html>

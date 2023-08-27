@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .add-product-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input {
+            width: 93%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="add-product-container">
+        <h2>Add New Product</h2>
+        <form id="add-product-form">
+            <div class="form-group">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" required>
+            </div>
+            <div class="form-group">
+                <label for="productQuantity">Product Quantity:</label>
+                <input type="number" id="productQuantity" required>
+            </div>
+            <div class="form-group">
+                <label for="productMRP">Product MRP Price:</label>
+                <input type="number" id="productMRP" required>
+            </div>
+            <div class="form-group">
+                <label for="productSalePrice">Product Sale Price:</label>
+                <input type="number" id="productSalePrice" required>
+            </div>
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("add-product-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var productName = document.getElementById("productName").value;
+            var productQuantity = document.getElementById("productQuantity").value;
+            var productMRP = document.getElementById("productMRP").value;
+            var productSalePrice = document.getElementById("productSalePrice").value;
+
+            var newProduct = {
+                name: productName,
+                quantity: productQuantity,
+                mrp: productMRP,
+                salePrice: productSalePrice,
+                date: getCurrentDate()
+            };
+
+            var existingProducts = JSON.parse(localStorage.getItem("products")) || [];
+
+
+            existingProducts.push(newProduct);
+            localStorage.setItem("products", JSON.stringify(existingProducts));
+
+            window.close();
+
+            window.location.href = "view-products.html";
+        });
+
+        function getCurrentDate() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = String(now.getMonth() + 1).padStart(2, '0');
+            var day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+    </script>
+</body>
+
+</html>

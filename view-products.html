@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .products-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .add-product-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-button,
+        .delete-button,
+        .user-details-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="products-container">
+        <h2>Product List</h2>
+        <div class="button-container">
+            <button class="user-details-button" id="user-details">Go to User Details</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Product Quantity</th>
+                    <th>Product MRP Price</th>
+                    <th>Product Sale Price</th>
+                    <th>Date Added</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button class="add-product-button" id="add-product">Add Product</button>
+    </div>
+
+    <script>
+        function populateTable() {
+            var tableBody = document.querySelector("tbody");
+            var products = JSON.parse(localStorage.getItem("products")) || [];
+
+            products.forEach(function (product) {
+                var row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>${product.quantity}</td>
+                    <td>${product.mrp}</td>
+                    <td>${product.salePrice}</td>
+                    <td>${product.date}</td>
+                    <td class="action-buttons">
+                        <button class="edit-button">Edit</button>
+                        <button class="delete-button">Delete</button>
+                    </td>
+                `;
+            });
+        }
+
+        document.getElementById("user-details").addEventListener("click", function () {
+            var userData = JSON.parse(localStorage.getItem("userData"));
+            if (userData) {
+                var queryParams = `?name=${userData.name}&email=${userData.email}`;
+                window.location.href = `user-details.html${queryParams}`;
+            }
+        });
+
+        window.onload = populateTable;
+
+        document.getElementById("add-product").addEventListener("click", function () {
+            window.location.href = "add-product.html";
+        });
+    </script>
+</body>
+
+</html>
